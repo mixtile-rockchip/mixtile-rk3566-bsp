@@ -49,9 +49,8 @@ jobs:
           libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev \
           libxmlsec1-dev libffi-dev liblzma-dev uuid-dev libbluetooth-dev u-boot-tools \
           rsync libmpc-dev bsdmainutils python2 gettext qemu-user-static binfmt-support \
-          live-build xxd sudo time \
-          && rm -rf /var/lib/apt/lists/* && git lfs install
-
+          live-build xxd sudo time && git lfs install
+  
       - name: Enable qemu-aarch64
         shell: bash
         run: |
