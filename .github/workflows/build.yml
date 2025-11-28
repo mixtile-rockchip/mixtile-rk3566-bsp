@@ -86,7 +86,7 @@ jobs:
           echo y | repo init -u https://github.com/mixtile-rockchip/mixtile-rk3566-manifests \
             -b rk3566-rk3568-rkr6 \
             -m rk3566_rk3568_linux6.1_release.xml && \
-          repo sync -c && \
+          repo sync -c --no-tags --no-clone-bundle && \
           repo forall -c 'if [ -d .git ]; then echo "===> $REPO_PATH"; git lfs install --local; git lfs pull || true; fi'
 
       - name: Build image
