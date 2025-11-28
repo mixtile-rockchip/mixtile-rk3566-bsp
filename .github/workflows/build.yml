@@ -78,7 +78,7 @@ jobs:
       - name: download code
         shell: bash
         run: |
-          echo y | repo init -u https://github.com/mixtile-rockchip/manifests \
+          echo y | repo init -u https://github.com/mixtile-rockchip/mixtile-rk3566-manifests \
             -b rk3566-rk3568-rkr6 \
             -m rk3566_rk3568_linux6.1_release.xml && \
           repo sync -c && \
