@@ -95,7 +95,7 @@ jobs:
       - name: Build image
         shell: bash
         run: |
-          echo '3' > input.txt && \
+          echo '2' > input.txt && \
           sudo ./build.sh chip < input.txt && sudo rm input.txt && \
           sudo ./build.sh all
 
