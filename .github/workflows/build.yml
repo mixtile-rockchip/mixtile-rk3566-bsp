@@ -1,5 +1,5 @@
 name: Build
-run-name: Build with rk3566 buildroot
+run-name: Build with rk3566 Debian
 
 on:
   workflow_dispatch:
