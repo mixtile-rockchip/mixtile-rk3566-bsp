@@ -109,7 +109,7 @@ jobs:
       - name: Upload RK Image image
         uses: actions/upload-artifact@v4
         with:
-          name: image-release-rockchip-format-mixtile-rk3566-buildroot
+          name: image-release-rockchip-format-mixtile-rk3566-Debian
           path: ./output/update/Image/update.img.xz
           if-no-files-found: error
 
