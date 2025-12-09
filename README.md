@@ -1,5 +1,25 @@
 # mixtile-rk3566-bsp
 
+## Interface Usage Guide
+
+For detailed interface usage documentation, please refer to the [Interface Documentation](./docs) directory.
+
+The following interfaces are supported:
+- [DEBUG UART](./docs/DEBUG-UART/DEBUG-UART.md)
+- [GMAC Ethernet](./docs/GMAC/GMAC.md)
+- [RTC (Real-Time Clock)](./docs/RTC/RTC.md)
+- [WIFI and Bluetooth](./docs/WIFI-BT/WIFI-BT.md)
+- [USB](./docs/USB/usb.md)
+- [SDMMC (SD/MMC Card)](./docs/SDMMC/SDMMC.md)
+- [SPDIF Audio](./docs/SPDIF/SPDIF-TX.md)
+- [DAC (Digital-to-Analog Converter)](./docs/DAC/DAC.md)
+- [ADC (Analog-to-Digital Converter)](./docs/ADC/ADC.md)
+- [Button (KEY)](./docs/KEY/KEY.md)
+- [LED](./docs/LED/LED.md)
+- [SARADC](./docs/SARADC/SARADC.md)
+- [TRIGGER-OUT 12V](./docs/TRIGGER-OUT-12V/TRIGGER-OUT-12V.md)
+- [AirPlay MFI](./docs/AirplayMFI/AirplayMFI.md)
+
 ## Build
 
 ### 1. Install Docker
