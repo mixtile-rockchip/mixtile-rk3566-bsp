@@ -9,6 +9,34 @@ on:
         required: true
         default: false
         type: boolean
+      version:
+        description: Version tag (e.g., rc-0.0.1, beta-1.0.0, final-2.0.0)
+        required: true
+        default: 'rc-0.0.1'
+        type: string
+      product_name:
+        description: Product Name (e.g., mixtile-rk3566)
+        required: true
+        default: 'mixtile-rk3566'
+        type: string
+      image_type:
+        description: Image Type (RK or RAW)
+        required: true
+        default: 'RK'
+        type: choice
+        options:
+          - RK
+          - RAW
+      system_name:
+        description: System Name with version (e.g., ubuntu22.04, Debian12)
+        required: true
+        default: 'Debian'
+        type: string
+      kernel_version:
+        description: Linux kernel version (e.g., linux5.10, linux6.1)
+        required: true
+        default: 'linux6.1'
+        type: string
 
 jobs:
   build:
@@ -18,6 +46,13 @@ jobs:
       matrix:
         platform:
           - rk3566
+
+    env:
+      PRODUCT_NAME: ${{ inputs.product_name }}
+      VERSION_TAG: ${{ inputs.version }}
+      IMAGE_TYPE: ${{ inputs.image_type }}
+      SYSTEM_NAME: ${{ inputs.system_name }}
+      KERNEL_VER: ${{ inputs.kernel_version }}
 
     steps:
       - name: Get more disk space
@@ -76,6 +111,16 @@ jobs:
           echo "TOKEN=${{ secrets.GH_PAT }}" >> $GITHUB_ENV
           git config --global url."https://oauth2:${{ secrets.GH_PAT }}@github.com/".insteadOf "https://github.com/"
 
+      - name: Set build date and compose image name
+        shell: bash
+        run: |
+          BUILD_DATE=$(date +'%y%m%d')
+          echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
+          IMAGE_NAME="${PRODUCT_NAME}-${VERSION_TAG}-${IMAGE_TYPE}-format-${SYSTEM_NAME}-${KERNEL_VER}-${BUILD_DATE}"
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+          echo "Image name will be: $IMAGE_NAME"
+          echo "Version tag: $VERSION_TAG"
+
       - name: Install repo
         shell: bash
         run: |
@@ -92,6 +137,22 @@ jobs:
           repo sync -c --no-tags --no-clone-bundle && \
           repo forall -c 'if [ -d .git ]; then echo "===> $REPO_PATH"; git lfs install --local; git lfs pull || true; fi'
 
+      - name: Create version file in overlay
+        shell: bash
+        run: |
+          # Create overlay directory if it doesn't exist
+          mkdir -p debian/overlay/etc
+          # Write version file
+          echo "$VERSION_TAG" > debian/overlay/etc/version
+          echo "Created /etc/version file in debian/overlay with content: $VERSION_TAG"
+          # Verify the file was created
+          if [ -f "debian/overlay/etc/version" ]; then
+            echo "Version file content: $(cat debian/overlay/etc/version)"
+          else
+            echo "Warning: Failed to create version file"
+            exit 1
+          fi
+
       - name: Build image
         shell: bash
         run: |
@@ -104,13 +165,15 @@ jobs:
         run: |
           pushd ./output/update/Image && \
           sudo xz -4 --force --quiet --threads=0 update.img && \
+          sudo mv update.img.xz "${IMAGE_NAME}.img.xz" && \
           popd
+          echo "Image file renamed to: ${IMAGE_NAME}.img.xz"
 
       - name: Upload RK Image image
         uses: actions/upload-artifact@v4
         with:
-          name: image-release-rockchip-format-mixtile-rk3566-Debian
-          path: ./output/update/Image/update.img.xz
+          name: ${{ env.IMAGE_NAME }}
+          path: ./output/update/Image/${{ env.IMAGE_NAME }}.img.xz
           if-no-files-found: error
 
       - name: Clean cache
