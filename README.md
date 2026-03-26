@@ -11,6 +11,7 @@ The following interfaces are supported:
 - [WIFI and Bluetooth](./docs/WIFI-BT/WIFI-BT.md)
 - [USB](./docs/USB/usb.md)
 - [SDMMC (SD/MMC Card)](./docs/SDMMC/SDMMC.md)
+- [HDMI eARC](./docs/HDMI-eARC/HDMI-eARC.md)
 - [SPDIF Audio](./docs/SPDIF/SPDIF-TX.md)
 - [DAC (Digital-to-Analog Converter)](./docs/DAC/DAC.md)
 - [ADC (Analog-to-Digital Converter)](./docs/ADC/ADC.md)
