@@ -7,6 +7,7 @@ For detailed interface usage documentation, please refer to the [Interface Docum
 The following interfaces are supported:
 - [DEBUG UART](./docs/DEBUG-UART/DEBUG-UART.md)
 - [GMAC Ethernet](./docs/GMAC/GMAC.md)
+- [GPIO Mapping](./docs/GPIO/GPIO-MAPPING.md)
 - [RTC (Real-Time Clock)](./docs/RTC/RTC.md)
 - [WIFI and Bluetooth](./docs/WIFI-BT/WIFI-BT.md)
 - [USB](./docs/USB/usb.md)
